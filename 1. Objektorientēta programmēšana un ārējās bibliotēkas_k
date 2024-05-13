@@ -1,0 +1,53 @@
+# Funkcija, lai apvienotu un izveidotu datnes ar norādītajiem datiem
+def apvienot_datnes(admin_datne, viesis_datne, apvienota_datne):
+    with open(admin_datne, 'r') as admin_fails:
+        admin_dati = admin_fails.readlines()
+    
+    with open(viesis_datne, 'r') as viesis_fails:
+        viesis_dati = viesis_fails.readlines()
+    
+    with open(apvienota_datne, 'w') as apvienotais_fails:
+        for admin_rinda, viesis_rinda in zip(admin_dati, viesis_dati):
+            apvienotais_fails.write(admin_rinda.strip() + ' ' + viesis_rinda)
+
+# Funkcija, lai aprēķinātu vidējo vecumu un atrastu jaunāko un vecāko administratoru
+def aprekina_vecumu(admin_datne):
+    with open(admin_datne, 'r') as fails:
+        admin_dati = fails.readlines()
+
+    vecumi = [int(rinda.split()[-1]) for rinda in admin_dati]
+    vid_vek = sum(vecumi) / len(vecumi)
+    jaun_vek = min(vecumi)
+    vec_vek = max(vecumi)
+    return vid_vek, jaun_vek, vec_vek
+
+# Funkcija, lai saskaitītu administratorus un viesus
+def saskaita_personas(admin_datne, viesis_datne):
+    with open(admin_datne, 'r') as admin_fails:
+        admin_dati = admin_fails.readlines()
+    with open(viesis_datne, 'r') as viesis_fails:
+        viesis_dati = viesis_fails.readlines()
+    admin_sk = len(admin_dati)
+    viesis_sk = len(viesis_dati)
+    return admin_sk, viesis_sk
+
+# Norādiet jūsu datnes
+admin_datne = 'admin.txt'
+viesis_datne = 'viesis.txt'
+apvienota_datne = 'apvienots.txt'
+
+# Apvieno datnes
+apvienot_datnes(admin_datne, viesis_datne, apvienota_datne)
+
+# Aprēķina vecumu
+vid_vek, jaun_vek, vec_vek = aprekina_vecumu(admin_datne)
+
+# Saskaita personu skaitu
+admin_sk, viesis_sk = saskaita_personas(admin_datne, viesis_datne)
+
+# Izdrukā rezultātus
+print(f"Vidējais administrators ir {vid_vek} gadus vecs.")
+print(f"Jaunākais administrators ir {jaun_vek} gadus vecs.")
+print(f"Vecākais administrators ir {vec_vek} gadus vecs.")
+print(f"Administratoru skaits: {admin_sk}")
+print(f"Viesu skaits: {viesis_sk}")
